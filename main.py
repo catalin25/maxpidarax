@@ -6,10 +6,10 @@ fpsClock = pygame.time.Clock()
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 700
-SCROLL_THRESH = 150 #DISTANTA PANA LA CAT PLAYERUL VEDE
+SCROLL_THRESH = 80 #DISTANTA PANA LA CAT PLAYERUL VEDE
 red= (255,0,0)
 gray = (80,80,80)
-bgcolor = (255,200,124)
+bgcolor = (2, 48, 32)
 screen_scroll = 0
 bg_scroll = 0
 
@@ -22,7 +22,7 @@ bgpic = pygame.image.load("assets/bgpic.jpg")
 font = pygame.font.Font('freesansbold.ttf', 32)
 text = font.render('Press Q to exit', True, red, gray)
 textRect = text.get_rect()
-textRect = (0,0)
+textRectw = (0,0)
 
 
 def drawbg():
@@ -70,6 +70,7 @@ class Soldier():
         self.in_air = True
 
 
+
     def move(self):
         dx = 0
         dy = 0
@@ -87,7 +88,6 @@ class Soldier():
             dx += 5
             self.flip = False
         
-            
         
         #gravitate
         self.vel_y += 1
@@ -124,6 +124,8 @@ class Soldier():
         if self.frame_index >= len(self.animation_list):
             self.frame_index = 0
 
+
+
     def draw(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False ), self.rect)
         self.hitbox = (self.rect.x + 80, self.rect.y + 35, 70, 100)
@@ -133,6 +135,8 @@ class Soldier():
         if (self.hitbox[0] + self.hitbox[2] > platform.hitbox[0]) and (self.hitbox[0] < platform.hitbox[0] + platform.hitbox[2]):
             self.rect.bottom = platform.rect.top - 7 # nu e potrivit cum trebuie
             self.in_air = False
+            # if (self.hitbox[0] + self.hitbox[2] > platform.hitbox[1]) :
+            #     self.rect.x = platform.hitbox[1]
        if (self.hitbox[1] < platform2.hitbox[1] + platform2.hitbox[3]) and (self.hitbox[1] + self.hitbox[3] > platform2.hitbox[1]):
         if (self.hitbox[0] + self.hitbox[2] > platform2.hitbox[0]) and (self.hitbox[0] < platform2.hitbox[0] + platform2.hitbox[2]):
             self.rect.bottom = platform2.rect.top - 7 # nu e potrivit cum trebuie
@@ -141,11 +145,13 @@ class Soldier():
         if (self.hitbox[0] + self.hitbox[2] > platform3.hitbox[0]) and (self.hitbox[0] < platform3.hitbox[0] + platform3.hitbox[2]):
                 self.rect.bottom = platform3.rect.top - 7 # nu e potrivit cum trebuie
                 self.in_air = False
+
+    # def coliziune(self, platform, platform2,platform3):
+    #     if (self.hitbox[0] + self.hitbox[2] > platform.hitbox[0])
+
                  
             
         
-
-
 player = Soldier(100, 470, 2.5)
 player2 = Soldier(300, 470, 2.5)
 platform = Plat(0, 600)
